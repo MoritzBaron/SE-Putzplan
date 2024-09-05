@@ -1,0 +1,33 @@
+version: "3.1"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: your_database
+      MYSQL_USER: your_user
+      MYSQL_PASSWORD: your_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
+  backend:
+    build: .
+    container_name: node_backend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: your_user
+      DB_PASSWORD: your_password
+      DB_NAME: your_database
+    volumes:
+      - .:/usr/src/app
+
+volumes:
+  db_data:
