@@ -1,0 +1,56 @@
+CREATE TABLE users (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE wgs (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+ CREATE TABLE wg_memberships (
+    wg_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (wg_id) REFERENCES wgs(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    PRIMARY KEY (wg_id, user_id)
+);
+
+CREATE TABLE chores (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    wg_id INTEGER NOT NULL,
+    description TEXT NOT NULL,
+    due_date DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (wg_id) REFERENCES wgs(id)
+);
+
+mysql> CREATE TABLE chore_assignments (
+    chore_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    week_start DATE NOT NULL,
+    week_end DATE NOT NULL,
+    assigned_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chore_id) REFERENCES chores(id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    PRIMARY KEY (chore_id, user_id, week_start)
+);
+
+CREATE TABLE user_availability (
+    id INTEGER PRIMARY KEY AUTO_INCREMENT,
+    user_id INTEGER NOT NULL,
+    day_of_week VARCHAR(10) NOT NULL,
+    start_time TIME NOT NULL,
+    end_time TIME NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
