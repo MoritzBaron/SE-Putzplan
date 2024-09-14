@@ -6,7 +6,6 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
-
 CREATE TABLE wgs (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
@@ -14,7 +13,7 @@ CREATE TABLE wgs (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
- CREATE TABLE wg_memberships (
+CREATE TABLE wg_memberships (
     wg_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     joined_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -22,7 +21,6 @@ CREATE TABLE wgs (
     FOREIGN KEY (user_id) REFERENCES users(id),
     PRIMARY KEY (wg_id, user_id)
 );
-
 CREATE TABLE chores (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     wg_id INTEGER NOT NULL,
@@ -32,8 +30,7 @@ CREATE TABLE chores (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (wg_id) REFERENCES wgs(id)
 );
-
-mysql> CREATE TABLE chore_assignments (
+CREATE TABLE chore_assignments (
     chore_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     week_start DATE NOT NULL,
@@ -43,7 +40,6 @@ mysql> CREATE TABLE chore_assignments (
     FOREIGN KEY (user_id) REFERENCES users(id),
     PRIMARY KEY (chore_id, user_id, week_start)
 );
-
 CREATE TABLE user_availability (
     id INTEGER PRIMARY KEY AUTO_INCREMENT,
     user_id INTEGER NOT NULL,
