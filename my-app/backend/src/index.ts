@@ -19,4 +19,8 @@ const db = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-db.connect((err) => {});
+db.connect((err) => {
+  if (err) {
+    console.error();
+  }
+});
