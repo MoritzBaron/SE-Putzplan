@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { User } from "../models/user";
+import { User } from "../models/user"; // Ensure the path is correct
 
 const router = Router();
 
@@ -18,7 +18,7 @@ router.post("/login", async (req: Request, res: Response) => {
     expiresIn: "1h",
   });
 
-  res.json({ token });
+  return res.json({ token });
 });
 
 router.post("/register", async (req: Request, res: Response) => {
