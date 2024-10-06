@@ -5,7 +5,7 @@ import { User } from "../models/user";
 
 const router = Router();
 
-router.post("/login", async (req: Request, res: Response) => {
+router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findByEmail(email);
