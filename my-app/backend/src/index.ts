@@ -21,6 +21,12 @@ const db = mysql.createConnection({
 
 db.connect((err) => {
   if (err) {
-    console.error();
+    console.error("Error connecting to MySql:", err);
+    return;
   }
+  console.log("Connected to MySQL");
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
