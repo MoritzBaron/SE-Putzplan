@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import authService from "../services/authService";
+import { login } from "../services/authService";
 
 export function LoginForm() {
   const [email, setEmail] = useState("");
@@ -8,7 +8,7 @@ export function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await authService.login(email, password);
+      const response = await login(email, password);
       console.log("Login successful:", response);
     } catch (err) {
       console.error("Login failed:", err);
